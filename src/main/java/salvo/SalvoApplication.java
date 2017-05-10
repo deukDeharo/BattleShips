@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -20,7 +22,8 @@ public class SalvoApplication {
 	@Bean
 	public CommandLineRunner initData (PlayerRepository playerRepository,
 									   GameRepository gameRepository,
-									   GamePlayerRepository gamePlayerRepository){
+									   GamePlayerRepository gamePlayerRepository,
+									   ShipRepository shipRepository){
 		return  args -> {
 
 			Game game1 = new Game();
@@ -32,15 +35,6 @@ public class SalvoApplication {
 			Player player3 = new Player("Sultan");
 			Player player4 = new Player("GC-4");
 
-			GamePlayer gamePlayer1 = new GamePlayer(player2,game1);
-			GamePlayer gamePlayer2 = new GamePlayer(player1,game1);
-
-			GamePlayer gamePlayer3 = new GamePlayer(player3,game2);
-			GamePlayer gamePlayer4 = new GamePlayer(player4,game2);
-
-			GamePlayer gamePlayer5 = new GamePlayer(player1,game3);
-			GamePlayer gamePlayer6 = new GamePlayer(player3,game3);
-
 			playerRepository.save(player1);
 			playerRepository.save(player2);
 			playerRepository.save(player3);
@@ -50,12 +44,79 @@ public class SalvoApplication {
 			gameRepository.save(game2);
 			gameRepository.save(game3);
 
+			GamePlayer gamePlayer1 = new GamePlayer(player2,game1);
+			GamePlayer gamePlayer2 = new GamePlayer(player1,game1);
+
+			GamePlayer gamePlayer3 = new GamePlayer(player3,game2);
+			GamePlayer gamePlayer4 = new GamePlayer(player4,game2);
+
+			GamePlayer gamePlayer5 = new GamePlayer(player1,game3);
+			GamePlayer gamePlayer6 = new GamePlayer(player3,game3);
+
+			//Loc del Carrier
+			ArrayList<String> loc1 = new ArrayList<>(Arrays.asList("I6","I7","I8","I9","I10"));
+			ArrayList<String> loc1_2 = new ArrayList<>(Arrays.asList("H1","H2","H3","H4","H5"));
+			//Loc del BattleShip
+			ArrayList<String> loc2 = new ArrayList<>(Arrays.asList("A4","B4","C4","D4"));
+			ArrayList<String> loc2_2 = new ArrayList<>(Arrays.asList("A3","B3","C3","D3"));
+			//Loc del Submarine
+			ArrayList<String> loc3 = new ArrayList<>(Arrays.asList("H2","H3","H4"));
+			ArrayList<String> loc3_2 = new ArrayList<>(Arrays.asList("J5","J6","J7"));
+			//Loc del Destroyer
+			ArrayList<String> loc4 = new ArrayList<>(Arrays.asList("E8","E9","E10"));
+			ArrayList<String> loc4_2 = new ArrayList<>(Arrays.asList("E8","E9","E10"));
+			//Loc del Patrol
+			ArrayList<String> loc5 = new ArrayList<>(Arrays.asList("B8","B9"));
+			ArrayList<String> loc5_2 = new ArrayList<>(Arrays.asList("A1","B1"));
+
+			Ship ship1 = new Ship("Carrier",loc1);
+			Ship ship2 = new Ship("BattleShip",loc2);
+			Ship ship3 = new Ship("Submarine",loc3);
+			Ship ship4 = new Ship("Destroyer",loc4);
+			Ship ship5 = new Ship("Patrol",loc5);
+
+			Ship ship6 = new Ship("Carrier",loc1_2);
+			Ship ship7 = new Ship("BattleShip",loc2_2);
+			Ship ship8 = new Ship("Submarine",loc3_2);
+			Ship ship9 = new Ship("Destroyer",loc4_2);
+			Ship ship10 = new Ship("Patrol",loc5_2);
+
+			gamePlayer1.addShip(ship1);
+			gamePlayer1.addShip(ship2);
+			gamePlayer1.addShip(ship3);
+			gamePlayer1.addShip(ship4);
+			gamePlayer1.addShip(ship5);
+
+			gamePlayer2.addShip(ship6);
+			gamePlayer2.addShip(ship7);
+			gamePlayer2.addShip(ship8);
+			gamePlayer2.addShip(ship9);
+			gamePlayer2.addShip(ship10);
+//EL ORDEN DE LOS REOSITORYS INFLUYE EN SPRING
+			//ADEMÁS, EL DEBUGGER IGNORA SI EL ELEMENTO ESTÁ MAPEADO. SIEMPRE EN EL ONE TO MANY
 			gamePlayerRepository.save(gamePlayer1);
 			gamePlayerRepository.save(gamePlayer2);
 			gamePlayerRepository.save(gamePlayer3);
 			gamePlayerRepository.save(gamePlayer4);
 			gamePlayerRepository.save(gamePlayer5);
 			gamePlayerRepository.save(gamePlayer6);
+
+			shipRepository.save(ship1);
+			shipRepository.save(ship2);
+			shipRepository.save(ship3);
+			shipRepository.save(ship4);
+			shipRepository.save(ship5);
+
+			shipRepository.save(ship6);
+			shipRepository.save(ship7);
+			shipRepository.save(ship8);
+			shipRepository.save(ship9);
+			shipRepository.save(ship10);
+
+
+
+
+
 
 
 			/*

@@ -1,6 +1,7 @@
 package salvo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,6 +76,39 @@ public class SalvoController {
 
         return playerObjectDTO;
     }
+
+    @RequestMapping("game_view/{gameId}")
+    public Map<String,Object> findGameId(@PathVariable Long gameId){
+
+        GamePlayer gamePlayer = gamePlayerRepository.findOne(gameId);
+        Game game = gamePlayer.getGame();
+
+        Map<String,Object> gameObjectDTO = new LinkedHashMap<>();
+        gameObjectDTO.put("id",game.getId());
+        gameObjectDTO.put("Date",game.getDate());
+
+        gameObjectDTO.put("participation",game.getGamePlayers()
+                .stream()
+                .map(gamePlayerX -> getGamePlayersDTO(gamePlayerX)).collect(Collectors.toList()));
+
+        gameObjectDTO.put("Ships",gamePlayer.getShips().stream().map(ship -> findShips(ship)).collect(Collectors.toList()));
+
+        return gameObjectDTO;
+
+    }
+
+    public Map<String,Object> findShips(Ship ship){
+        Map<String,Object> gameObjectDTO = new LinkedHashMap<>();
+        gameObjectDTO.put("type",ship.getBoatType());
+        gameObjectDTO.put("locations",ship.getLocationList());
+        return gameObjectDTO;
+    }
+
+
+
+
+
+
 
 }
 
