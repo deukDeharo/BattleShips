@@ -25,8 +25,8 @@ function createList(data){
     for(var i  = 0; i<gameList.length; i++){
         $(document.createElement("li")).appendTo("#Games").text("Game "+i).attr("id", "Game"+i);
         $(document.createElement("ul")).appendTo("#Game"+i).attr("id","ul_1"+i);
-        $(document.createElement("li")).appendTo("#ul_1"+i).attr("id","date"+i).text("date: " + gameList[0].date);
-        $(document.createElement("li")).appendTo("#ul_1"+i).attr("id","id_1"+i).text("id: " + gameList[0].id);
+        $(document.createElement("li")).appendTo("#ul_1"+i).attr("id","date"+i).text("date: " + gameList[i].date);
+        $(document.createElement("li")).appendTo("#ul_1"+i).attr("id","id_1"+i).text("id: " + gameList[i].id);
         $(document.createElement("li")).appendTo("#ul_1"+i).attr("id","participation"+i).text("participations");
         $(document.createElement("ul")).appendTo("#participation"+i).attr("id","listParticipation"+i);
 
