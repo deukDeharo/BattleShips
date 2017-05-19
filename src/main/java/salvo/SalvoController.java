@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -92,6 +89,8 @@ public class SalvoController {
                 .map(gamePlayerX -> getGamePlayersDTO(gamePlayerX)).collect(Collectors.toList()));
 
         gameObjectDTO.put("Ships",gamePlayer.getShips().stream().map(ship -> findShips(ship)).collect(Collectors.toList()));
+        //gameObjectDTO.put("Salvoes", gamePlayer.getSalvos().stream().map(salvo -> findSalvos(salvo)).collect(Collectors.toList()));
+       gameObjectDTO.put("Salvoes",game.getGamePlayers().stream().map(gp -> findSalvos(gp)).collect(Collectors.toList()));
 
         return gameObjectDTO;
 
@@ -103,7 +102,25 @@ public class SalvoController {
         gameObjectDTO.put("locations",ship.getLocationList());
         return gameObjectDTO;
     }
+    private Map<String,Object> findSalvos(GamePlayer gp){
 
+            Map<String,Object> gameObjectDTO = new LinkedHashMap<>();
+        gameObjectDTO.put("Player",gp.getPlayer().getId());
+        gameObjectDTO.put("UserName",gp.getPlayer().getUserName());
+            gameObjectDTO.put("Salvos",gp.getSalvos().stream().map(salvo -> findRealSalvos(salvo)).collect(Collectors.toList()));
+
+            return gameObjectDTO;
+
+    }
+
+    private Map<String,Object> findRealSalvos(Salvo salvo){
+        Map<String,Object> gameObjectDTO = new LinkedHashMap<>();
+        gameObjectDTO.put("turn", salvo.getTurn());
+        gameObjectDTO.put("locations", salvo.getLocationList());
+
+        return gameObjectDTO;
+
+    }
 
 
 

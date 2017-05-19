@@ -16,6 +16,7 @@ public class Ship {
     private Long Id;
 
     @ElementCollection
+    @Column(name = "locations")
     private List<String> locationList;
 
 

@@ -1,9 +1,7 @@
 package salvo;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gerarddeharoramirez on 28/4/17.
@@ -15,7 +13,9 @@ public class GamePlayer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
 
-    private Date joinDate = new Date();
+    Calendar calendar = Calendar.getInstance();
+
+    private Date joinDate = calendar.getTime();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
@@ -26,7 +26,18 @@ public class GamePlayer {
     private Game game;
 
     @OneToMany(mappedBy = "gamePlayer" ,fetch = FetchType.EAGER)
-    Set<Ship> ships = new HashSet<>();
+    Set<Ship> ships = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy ="gamePlayer", fetch = FetchType.EAGER)
+    Set<Salvo> salvos = new LinkedHashSet<>();
+
+    public Set<Salvo> getSalvos() {
+        return salvos;
+    }
+
+    public void setSalvos(Set<Salvo> salvos) {
+        this.salvos = salvos;
+    }
 
     public GamePlayer(){}
 
@@ -75,9 +86,15 @@ public class GamePlayer {
     public Set<Ship> getShips(){
         return ships;
     }
+
     public void addShip(Ship ship) {
         ships.add(ship);
         ship.setGamePlayer(this);
+    }
+    public void addSalvos ( Salvo salvo){
+        salvos.add(salvo);
+        salvo.setGamePlayer(this);
+
     }
 
     public void setShips(Set<Ship> ships) {

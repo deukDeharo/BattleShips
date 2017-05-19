@@ -23,7 +23,7 @@ public class SalvoApplication {
 	public CommandLineRunner initData (PlayerRepository playerRepository,
 									   GameRepository gameRepository,
 									   GamePlayerRepository gamePlayerRepository,
-									   ShipRepository shipRepository){
+									   ShipRepository shipRepository, SalvoRepository salvoRepository){
 		return  args -> {
 
 			Game game1 = new Game();
@@ -92,6 +92,30 @@ public class SalvoApplication {
 			gamePlayer2.addShip(ship8);
 			gamePlayer2.addShip(ship9);
 			gamePlayer2.addShip(ship10);
+
+
+
+			ArrayList<String> salvoLoc1 = new ArrayList<String>(Arrays.asList("H1","C6","I2"));
+			ArrayList<String> salvoLoc2 = new ArrayList<String>(Arrays.asList("B1","B6","F2"));
+			ArrayList<String> salvoLoc3 = new ArrayList<String>(Arrays.asList("H2","C7","I3"));
+			ArrayList<String> salvoLoc4 = new ArrayList<String>(Arrays.asList("B2","B7","G3"));
+			ArrayList<String> salvoLoc5 = new ArrayList<String>(Arrays.asList("H3","C8","I4"));
+			ArrayList<String> salvoLoc6 = new ArrayList<String>(Arrays.asList("B3","B8","G4"));
+
+			Salvo fire1 = new Salvo(1,salvoLoc1);
+			Salvo fire2 = new Salvo(1,salvoLoc2);
+			Salvo fire3 = new Salvo(2,salvoLoc3);
+			Salvo fire4 = new Salvo(2,salvoLoc4);
+			Salvo fire5 = new Salvo(3,salvoLoc5);
+			Salvo fire6 = new Salvo(3,salvoLoc6);
+
+			gamePlayer1.addSalvos(fire1);
+			gamePlayer2.addSalvos(fire2);
+			gamePlayer1.addSalvos(fire3);
+			gamePlayer2.addSalvos(fire4);
+			gamePlayer1.addSalvos(fire5);
+			gamePlayer2.addSalvos(fire6);
+
 //EL ORDEN DE LOS REOSITORYS INFLUYE EN SPRING
 			//ADEMÁS, EL DEBUGGER IGNORA SI EL ELEMENTO ESTÁ MAPEADO. SIEMPRE EN EL ONE TO MANY
 			gamePlayerRepository.save(gamePlayer1);
@@ -113,6 +137,12 @@ public class SalvoApplication {
 			shipRepository.save(ship9);
 			shipRepository.save(ship10);
 
+			salvoRepository.save(fire1);
+			salvoRepository.save(fire2);
+			salvoRepository.save(fire3);
+			salvoRepository.save(fire4);
+			salvoRepository.save(fire5);
+			salvoRepository.save(fire6);
 
 
 

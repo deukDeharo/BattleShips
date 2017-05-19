@@ -3,6 +3,7 @@ package salvo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,7 +20,8 @@ public class Game {
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
 
-    private Date date = new Date();
+    Calendar calendar = Calendar.getInstance();
+    private Date date = calendar.getTime();
     public Game(){
 
 
