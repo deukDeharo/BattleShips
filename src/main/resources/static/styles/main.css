@@ -48,3 +48,120 @@ color: white;
 .lavaAnim{
     background-image: url("../assets/terrain/lava.gif");
 }
+#content{
+        width: 90%;
+        margin: auto;
+        height: 80vh;
+}
+#MainTitle{
+    color: wheat;
+    text-align: center;
+    text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px white;
+}
+
+.tableTitle{
+    padding:10px;
+
+    color: wheat;
+    text-align: center;
+    text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px white;
+}
+.leaderTab{
+   padding:10px;
+    color: wheat;
+    text-align: center;
+    text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px firebrick;
+}
+.leaderTitle{
+
+    color: wheat;
+    text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px firebrick;
+}
+#titleBody{
+ background-image: url("https://images5.alphacoders.com/301/thumb-1920-301269.jpg");
+}
+
+#gameBody{
+  background-image: url("https://s-media-cache-ak0.pinimg.com/736x/2f/64/f4/2f64f4ef7a5fe2c0d55982e9d32d88f0.jpg");
+
+}
+.p_data{
+        color: wheat;
+        margin: auto;
+        text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px white;
+        font-size: 18px;
+}
+#battleTitle{
+    color: wheat;
+    text-align: center;
+    text-shadow: -1px 0 firebrick, 0 1px firebrick, 1px 0 firebrick, 0 -1px white;
+
+}
+#data{
+    display: flex;
+        justify-content: center;
+        flex-direction: column;
+}
+
+#header{
+    height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba(82, 81, 81, 0.53);
+
+}
+#tableScore{
+    background-color: rgba(0, 0, 0, 0.51);
+}
+
+#loginDiv{
+    display:none;
+
+}
+
+#signinDiv{
+    display:none;
+}
+#gamesTable{
+    display: flex;
+        flex-wrap: wrap;
+}
+
+.gameDiv{
+    background-image:url("https://cdnb.artstation.com/p/assets/images/images/000/559/237/small/andy-hansen-andyhansenmetalpipe512x512.jpg?1430370634");
+    background-size: cover;
+    padding: 10px;
+    margin: 10px;
+}
+h4{
+        color: wheat;
+}
+p{
+        color: wheat;
+}
+
+#newGameButt{
+    margin: 10px 0px 20px 0px;
+}
+
+#joinGameTable{
+    background-color: rgba(0, 0, 0, 0.51);
+}
+
+#returnSection{
+    width:80%;
+    margin:auto;
+}
+.joinButt{
+    color:firebrick;
+}
+#FirstFrame{
+        display: flex;
+        margin: auto;
+        justify-content: space-around;
+}
+
+#shipTable{
+    color: wheat;
+}

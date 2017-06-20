@@ -3,36 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
-<body>
-<header>
-    <h1>Ship Locations!</h1>
+<body id="gameBody">
+    <header>
+        <h2 id="battleTitle">THE BATTLE FOR THE CORE</h2>
 
-</header>
-<section>
-    <div id="data">
+    </header>
+    <section>
+
+        <div id ="FirstFrame">
+            <div id="shipTable">
+                <input  id="horizontal" type="radio" name="ORIENTATION" value="horizontal" checked> Horizontal <br>
+                <input id="vertical" type="radio" name="ORIENTATION" value="vertical"> Vertical
+                <table class="table">
+                    <tbody>
+                     <tr>
+                         <th>Ships</th>
+                         <th>Length</th>
+
+                     </tr>
+                     <tr id="trPatrol">
+                         <td>Patrol</td>
+                         <td>2</td>
+
+
+                     </tr>
+                     <tr id="trDestroyer">
+                         <td>Destroyer</td>
+                         <td>3</td>
+
+                     </tr>
+                     <tr id="trSubmarine">
+                         <td>Submarine</td>
+                         <td>3</td>
+
+
+                     </tr>
+                     <tr id="trBattleShip">
+                         <td>BattleShip</td>
+                         <td>4</td>
+
+                     </tr>
+                     <tr id="trCarrier">
+                         <td>Carrier</td>
+                         <td>5</td>
+
+                     </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div id="addShipsGrid" class="grid_container" >
+
+
+            </div>
+
+        </div>
+
+        <div id="THE_Game">
+            <div id="game" class="grid_container">
+
+
+            </div>
+            <div id="oponent" class="grid_container">
+
+
+            </div>
+
+        </div>
+        <div id="data">
 
 
 
-    </div>
-    <div id="THE_Game">
-    <div id="game" class="grid_container">
+        </div>
+    </section>
+    <footer>
+        <div id="returnSection">
+            <button id="returnToGames"> Return </button>
+        </div>
 
-
-    </div>
-    <div id="oponent" class="grid_container">
-
-
-    </div>
-    </div>
-</section>
-<footer>
-
-</footer>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-<script src="scripts/makeTheGrid.js"></script>
-<script src="scripts/game.js"></script>
-<script src="scripts/putTheBoats.js"></script>
+    </footer>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scripts/makeTheGrid.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="scripts/putTheBoats.js"></script>
 </body>
 </html>

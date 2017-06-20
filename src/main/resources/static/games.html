@@ -3,16 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Games</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
-<body>
+<body id="titleBody">
+
 <div id="header">
-    <h1>SALVO!</h1>
-    <h2>Games</h2>
+    <h1 id="MainTitle">MagmaShips</h1>
+
 </div>
-<div id="jsonList">
-    <ul id="Games"></ul>
-</div>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-<script src="scripts/games.js"> </script>
+    <div id="content">
+
+        <div id="currentPlayerData">
+
+
+        </div>
+        <div id="emptyGames">
+
+
+
+
+        </div>
+        <div id="LeaderBoard">
+            <h2 class="leaderTitle">LeaderBoard</h2>
+
+        </div>
+
+
+
+
+        <div id="formLogins">
+            <button id="displayLogin"> Log in</button>
+            <button id="displaySignin"> Sign in</button>
+            <button id="logOutButton">  Log out</button>
+            <div id="loginDiv">
+                <form id="loginForm" method="post">
+
+                    Username:<br>
+                    <input type="text" name="userName" >
+                    <br>
+                    Password<br>
+                    <input type="text" name="password" >
+                    <br><br>
+                    <input id="loginButton" type="submit" value="Submit">
+
+                </form>
+            </div>
+            <div id="signinDiv">
+
+                <form id="signinForm" method="post">
+
+                    New Username:<br>
+                    <input type="text" name="userName" >
+                    <br>
+                    New Password<br>
+                    <input type="text" name="password" >
+                    <br><br>
+                    <input id="signinButton" type="submit" value="Submit">
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scripts/games.js"> </script>
 </body>
 </html>

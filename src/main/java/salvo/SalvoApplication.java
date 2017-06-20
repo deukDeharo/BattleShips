@@ -1,11 +1,28 @@
 package salvo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import javax.persistence.Id;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,17 +40,24 @@ public class SalvoApplication {
 	public CommandLineRunner initData (PlayerRepository playerRepository,
 									   GameRepository gameRepository,
 									   GamePlayerRepository gamePlayerRepository,
-									   ShipRepository shipRepository, SalvoRepository salvoRepository){
+									   ShipRepository shipRepository,
+									   SalvoRepository salvoRepository,
+									   ScoreRepository scoreRepository){
 		return  args -> {
 
 			Game game1 = new Game();
 			Game game2 = new Game();
 			Game game3 = new Game();
+			Game game4 = new Game();
+			Game game5 = new Game();
+			Game game6 = new Game();
 
-			Player player1 = new Player("Sputnik");
-			Player player2 = new Player("IceMan");
-			Player player3 = new Player("Sultan");
-			Player player4 = new Player("GC-4");
+
+
+			Player player1 = new Player("Sputnik","LoremIpsum1");
+			Player player2 = new Player("IceMan","LoremIpsum2");
+			Player player3 = new Player("Sultan","LoremIpsum3");
+			Player player4 = new Player("GC-4","LoremIpsum4");
 
 			playerRepository.save(player1);
 			playerRepository.save(player2);
@@ -43,6 +67,11 @@ public class SalvoApplication {
 			gameRepository.save(game1);
 			gameRepository.save(game2);
 			gameRepository.save(game3);
+			gameRepository.save(game4);
+			gameRepository.save(game5);
+			gameRepository.save(game6);
+
+
 
 			GamePlayer gamePlayer1 = new GamePlayer(player2,game1);
 			GamePlayer gamePlayer2 = new GamePlayer(player1,game1);
@@ -52,6 +81,16 @@ public class SalvoApplication {
 
 			GamePlayer gamePlayer5 = new GamePlayer(player1,game3);
 			GamePlayer gamePlayer6 = new GamePlayer(player3,game3);
+
+			GamePlayer gamePlayer7 = new GamePlayer(player2,game4);
+			GamePlayer gamePlayer8 = new GamePlayer(player4,game4);
+
+			GamePlayer gamePlayer9 = new GamePlayer(player3,game5);
+			GamePlayer gamePlayer10 = new GamePlayer(player1,game5);
+
+			GamePlayer gamePlayer11 = new GamePlayer(player1,game6);
+			GamePlayer gamePlayer12 = new GamePlayer(player4,game6);
+
 
 			//Loc del Carrier
 			ArrayList<String> loc1 = new ArrayList<>(Arrays.asList("I6","I7","I8","I9","I10"));
@@ -116,6 +155,18 @@ public class SalvoApplication {
 			gamePlayer1.addSalvos(fire5);
 			gamePlayer2.addSalvos(fire6);
 
+			Score score1 = new Score(gamePlayer1,1);
+			Score score2 = new Score(gamePlayer2,0);
+			Score score3 = new Score(gamePlayer3,0.5f);
+			Score score4 = new Score(gamePlayer4,0.5f);
+			Score score5 = new Score(gamePlayer5,0);
+			Score score6 = new Score(gamePlayer6,1);
+			Score score7 = new Score(gamePlayer7,0.5f);
+			Score score8 = new Score(gamePlayer8,0.5f);
+			Score score9 = new Score(gamePlayer9,0.5f);
+			Score score10 = new Score(gamePlayer10,1);
+
+
 //EL ORDEN DE LOS REOSITORYS INFLUYE EN SPRING
 			//ADEMÁS, EL DEBUGGER IGNORA SI EL ELEMENTO ESTÁ MAPEADO. SIEMPRE EN EL ONE TO MANY
 			gamePlayerRepository.save(gamePlayer1);
@@ -124,6 +175,12 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayer4);
 			gamePlayerRepository.save(gamePlayer5);
 			gamePlayerRepository.save(gamePlayer6);
+			gamePlayerRepository.save(gamePlayer7);
+			gamePlayerRepository.save(gamePlayer8);
+			gamePlayerRepository.save(gamePlayer9);
+			gamePlayerRepository.save(gamePlayer10);
+			gamePlayerRepository.save(gamePlayer11);
+			gamePlayerRepository.save(gamePlayer12);
 
 			shipRepository.save(ship1);
 			shipRepository.save(ship2);
@@ -143,6 +200,19 @@ public class SalvoApplication {
 			salvoRepository.save(fire4);
 			salvoRepository.save(fire5);
 			salvoRepository.save(fire6);
+
+			scoreRepository.save(score1);
+			scoreRepository.save(score2);
+			scoreRepository.save(score3);
+			scoreRepository.save(score4);
+			scoreRepository.save(score5);
+			scoreRepository.save(score6);
+			scoreRepository.save(score7);
+			scoreRepository.save(score8);
+			scoreRepository.save(score9);
+			scoreRepository.save(score10);
+
+
 
 
 
@@ -176,3 +246,83 @@ public class SalvoApplication {
 
 
 }
+@Configuration
+class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter{
+
+	@Autowired
+	PlayerRepository playerRepository;
+
+	@Override
+	public void init(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService());
+	}
+
+
+	@Bean
+	UserDetailsService userDetailsService(){
+	return new UserDetailsService() {
+		@Override
+		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+			Player player = playerRepository.findByUserName(username);
+			if (player.getUserName()!=null){
+				return new User(player.getUserName(),player.getPassword(),
+						AuthorityUtils.createAuthorityList("USER"));
+			}
+			else {
+				throw new UsernameNotFoundException("Unknown user: "+ username);
+			}
+		}
+	};
+	}
+}
+@EnableWebSecurity
+@Configuration
+class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+
+	@Override
+	protected void configure (HttpSecurity httpSecurity) throws Exception{
+
+		httpSecurity.authorizeRequests()
+
+				.antMatchers("/api/games").permitAll()
+				.antMatchers("/api/players").permitAll()
+				.antMatchers("/games.html").permitAll()
+				.antMatchers("/styles/main.css").permitAll()
+				.antMatchers("/scripts/games.js").permitAll()
+				.anyRequest().fullyAuthenticated()
+				.and()
+				.formLogin()
+				.usernameParameter("userName")
+				.passwordParameter("password")
+				.loginPage("/api/login")
+				.and()
+				.logout().logoutUrl("/api/logout");
+
+		// turn off checking for CSRF tokens
+		httpSecurity.csrf().disable();
+
+		// if user is not authenticated, just send an authentication failure response
+		httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
+		// if login is successful, just clear the flags asking for authentication
+		httpSecurity.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
+
+		// if login fails, just send an authentication failure response
+		httpSecurity.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
+		// if logout is successful, just send a success response
+		httpSecurity.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+	}
+
+	private void clearAuthenticationAttributes(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+		}
+
+
+
+	}
+
+}
+

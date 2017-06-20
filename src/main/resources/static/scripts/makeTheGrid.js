@@ -42,29 +42,29 @@ for(var i = 0; i<alfabeto.length; i++){
         }
 
        else if(i === 12 && z === 0 ){
-                   $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_09.2.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+                   $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_09.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
                }
         else if(i === 12 && z === ejeI ){
-                           $("<div class='tile'></div>").attr('id', tile_id + alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_11.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+                           $("<div class='tile'></div>").attr('id', tile_id + alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_11.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
                        }
         else if(i === 0 && z === ejeI ){
-                           $("<div class='tile'></div>").attr('id', tile_id + alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_03.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+                           $("<div class='tile'></div>").attr('id', tile_id + alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_03.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
                        }
         else if (i === 0 && z > 0 && z<ejeI){
-         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_02.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_02.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
         }
         else if (i === 12 && z > 0 && z < ejeI){
-         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_10.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+(z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_10.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
         }
         else if (i<ejeI && i>0 && z===0){
-         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+ (z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_05.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+ (z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_05.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
         }
         else if (i<ejeI && i>0 && z===ejeI){
-         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+ (z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_07.jpg")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+         $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+ (z-1)).attr("style", 'background-image: url("../assets/terrain_3(1)_07.png")').appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
         }
 
         else{
-            $("<div class='tile'></div>").attr('id',tile_id +  alfabeto[i]+ (z-1)).appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
+            $("<div class='tile'></div>").attr("data-gridLetter", alfabeto[i]).attr("data-gridTile", (z-1)).attr('id',tile_id +  alfabeto[i]+ (z-1)).appendTo("#"+(tile_id + alfabeto[i]+"_"+i).toString());
         }
     }
 
