@@ -165,3 +165,7 @@ p{
 #shipTable{
     color: wheat;
 }
+
+#addShipLocations{
+    color:firebrick;
+}

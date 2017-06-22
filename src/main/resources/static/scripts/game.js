@@ -22,11 +22,51 @@ $(document).ready(function(){
       $(".tile").click(function(){
       console.log("tilefunctionValid");
           if($(this).hasClass(chosenShip+0)){
-              console.log(chosenShip);
-              shipNumber++;
-              chosenShip = shipsList[shipNumber].boat;
-              chosenShipLength = shipsList[shipNumber].shipLength;
-              console.log(chosenShip);
+              for(var t = 0; t<chosenShipLength; t++){
+                $("."+chosenShip+t).append("<img class='boatTile' src='assets/terrain/scope.png'/>")
+                .addClass("busyShipTile");
+                var letterTile = $("."+chosenShip+t).attr("data-gridLetter");
+                var numberTile = $("."+chosenShip+t).attr("data-gridTile");
+                switch(chosenShip){
+
+                case "Patrol":
+                    locationPatrol.push(letterTile + numberTile);
+                    totalLocations.push(letterTile + numberTile);
+                break;
+
+                case "Destroyer":
+                    locationDestroyer.push(letterTile + numberTile);
+                    totalLocations.push(letterTile + numberTile);
+                break;
+
+                case "Submarine":
+                    locationSubmarine.push(letterTile + numberTile);
+                    totalLocations.push(letterTile + numberTile);
+                break;
+
+                case "Battleship":
+                    locationBattleShip.push(letterTile + numberTile);
+                    totalLocations.push(letterTile + numberTile);
+                break;
+
+                case "Carrier":
+                    locationCarrier.push(letterTile + numberTile);
+                    totalLocations.push(letterTile + numberTile);
+                break;
+
+
+                }
+
+              }
+              $("#tr"+chosenShip).remove();
+              if(shipNumber < 5){
+
+                shipNumber++;
+                chosenShip = shipsList[shipNumber].boat;
+                chosenShipLength = shipsList[shipNumber].shipLength;
+                console.log(chosenShip);
+              }
+
               }
 
 
@@ -47,7 +87,7 @@ $(document).ready(function(){
     });*/
 
 });
-
+var totalLocations = [];
 var withBoats;
 var repeat = false;
 var times= 0;
@@ -77,63 +117,103 @@ $("#vertical").click(function(){
 chekDirection();
 });
 
-
-
-/*$(".shipButton").click(function(){
-    chosenShip = $(this).attr("value");
-    chosenShipLength = $(this).attr('data-locationLenght');
-    console.log(chosenShip +" "+chosenShipLength);
-})*/
-
-
+$("#addShipLocations").click(function(){
+checkBoatsLength();
+location.reload();
+});
 
 function hoverEmptyBoats(){
 
 
         $(".tile").hover(function(){
 
-
+        if(shipNumber < 5){
             if( $(this).attr("data-gridTile") > 0 && $(this).attr("data-gridTile") < 11 && $(this).children().length == 0 && $(this).hasClass("busyShipTile")==false ){
                   var actualNumber = parseInt($(this).attr("data-gridTile"));
                   var actualLetter = $(this).attr("data-gridLetter");
-                  var hasBoat;
+                  var hasBoatHorizontal;
+                  var hasBoatVertical;
                   var count =0;
+                  var count2 = 0;
+                  var outsideTileHorizontal;
+                  var outsideTileVertical;
+                  var count3 = 0;
+                  var count4 = 0;
 
                     for(var q = 0; q<chosenShipLength; q++){
-                        if($("#alt2_"+ actualLetter + (actualNumber +i)).hasClass("busyShipTile") == false){
+                        if($("#alt2_"+ actualLetter + (actualNumber +q)).hasClass("busyShipTile") == false){
                             count++;
                     }
                     }
-                    if(chosenShipLength == count){
-                    hasBoat = false;
+                    for(var l = 0; l<chosenShipLength; l++){
+                        if($("#alt2_"+ alphabet[alphabet.indexOf(actualLetter)+p] + actualNumber ).hasClass("busyShipTile") == false){
+                            count4++;
+                    }
+                    }
+                    if(chosenShipLength == count4){
+                    hasBoatVertical = false;
                     }
                     else{
-                    hasBoat = true;
+                    hasBoatVertical = true;
                     }
 
-                    if(hasBoat == false){
-                    if(isHorizonatl){
-                     for(var i = 0; i<chosenShipLength; i++){
-                        $("#alt2_"+ actualLetter + (actualNumber +i)).css("opacity","0.7");
-                        $("#alt2_"+ actualLetter + (actualNumber +i)).addClass(chosenShip+i);
-                            }
+                    if(chosenShipLength == count){
+                    hasBoatHorizontal = false;
+                    }
+                    else{
+                    hasBoatHorizontal = true;
+                    }
+
+
+                    if(isHorizonatl == true && hasBoatHorizontal == false) {
+                     for (var y = 0; y<chosenShipLength; y++){
+                                            if($("#alt2_"+ actualLetter + (actualNumber +y)).attr("data-gridTile") < 11 && $("#alt2_"+ actualLetter + (actualNumber +y)).attr("data-gridTile") > 0){
+                                                count2++;
+                                                }
+                                        }
+                     if(chosenShipLength == count2){
+                                             outsideTileHorizontal = false;
+                                         }
+                                         else{
+                                             outsideTileHorizontal = true;
+                                         }
+                     if(outsideTileHorizontal == false){
+                         for(var i = 0; i<chosenShipLength; i++){
+                             $("#alt2_"+ actualLetter + (actualNumber +i)).css("opacity","0.7");
+                             $("#alt2_"+ actualLetter + (actualNumber +i)).addClass(chosenShip+i);
+                               }}
 
 
  }
-                    if(!isHorizonatl){
+                    if(isHorizonatl == false && hasBoatVertical == false){
+
+                    for (var p = 0; p<chosenShipLength; p++){
+                        if(alphabet.indexOf($("#alt2_"+ alphabet[alphabet.indexOf(actualLetter)+p] + actualNumber ).attr("data-gridLetter")) > -1)
+                        {
+                            count3++;
+                            }
+                    }
+                    if(chosenShipLength == count3){
+                        outsideTileVertical = false;
+                    }else{
+                        outsideTileVertical = true;
+                    }
+                    if(outsideTileVertical == false){
                         for(var i = 0; i<chosenShipLength; i++){
                             $("#alt2_"+ alphabet[alphabet.indexOf(actualLetter)+i] + actualNumber ).css("opacity","0.7");
                             $("#alt2_"+ alphabet[alphabet.indexOf(actualLetter)+i] + actualNumber ).addClass(chosenShip+i);
                         }
 
-
-
-                    }
-
+                        }
 
                     }
 
-                     }},
+
+
+
+                     }}
+
+                     },
             function(){
                 if( $(this).attr("data-gridTile") > 0 && $(this).attr("data-gridTile") < 11 && $(this).children().length == 0){
                     var actualNumber = parseInt($(this).attr("data-gridTile"));
@@ -185,18 +265,6 @@ function showData(gameData){
 
 };
 
-/*function clickBoats(){
-    console.log("Clickboats: " + "."+chosenShip+0);
-    $("."+chosenShip+0).click(function(){
-        console.log(chosenShip);
-        shipNumber++;
-        chosenShip = shipsList[shipNumber].boat;
-        chosenShipLength = shipsList[shipNumber].shipLength;
-        console.log(chosenShip);
-
-
-    })
-}*/
 
 function fillTheEmptyTiles(){
     for(var w = 0; w < chosenShipLength; w++){
@@ -237,17 +305,11 @@ function fireShips(gameData,div, i){
 };
 function addShips(){
 
-var ships = [{ boatType:"Submarine",locationList:["H2",
-                                                                "H3",
-                                                                "H4"]  },
-                                        {boatType:"Patrol",locationList:["B8","B9"
-                                                                               ]  },
-                                         {boatType:"Carrier",locationList:["I1","I2","I3","I4","I5"
-                                                                                                           ]  },
-                                        {boatType:"BattleShip",locationList:["A2","B2","C2","D2"
-                                                                                                          ]  },
-                                         {boatType:"Destroyer",locationList:["A1","B1","C1"
-                                                                                                           ]  },
+var ships = [{ boatType:"Submarine",locationList: locationSubmarine },
+                                        {boatType:"Patrol",locationList:locationPatrol },
+                                         {boatType:"Carrier",locationList: locationCarrier },
+                                        {boatType:"BattleShip",locationList: locationBattleShip },
+                                         {boatType:"Destroyer",locationList: locationDestroyer},
                                         ];
 
     $.post({
@@ -262,7 +324,7 @@ var ships = [{ boatType:"Submarine",locationList:["H2",
     })
     .fail(function (jqXHR, status, httpError) {
         console.log(jqXHR);
-      alert("Failed to add Ship: " + status + " " + httpError);
+
     })
 
 //location.reload();
@@ -277,3 +339,34 @@ function checkBoats(data){
         withBoats=true;
     }
 }
+
+function checkBoatsLength(){
+    var boatsCordenatesLenght = locationCarrier.length + locationBattleShip.length + locationSubmarine.length + locationDestroyer.length + locationPatrol.length;
+
+    totalLocations.sort();
+    var repeatedTiles = [];
+    var countTiles = 0;
+    var currentValue;
+    var error = false;
+    for (var i= 0; i<totalLocations.length; i++){
+        currentValue = totalLocations[i];
+        if(currentValue == totalLocations[i+1]){
+         countTiles++;
+        }
+
+    }
+
+    if(boatsCordenatesLenght != 17){
+        alert("The boats are bad located, please refresh the page and try it again");
+        error = true;
+    }
+    if(countTiles >0){
+        alert("The boats are bad located, please refresh the page and try it again");
+        error = true;
+    }
+    if(error == false){
+        addShips();
+    }
+
+}
+
